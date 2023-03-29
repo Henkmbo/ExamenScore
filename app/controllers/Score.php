@@ -42,13 +42,11 @@ class Score extends Controller
             header("Location: " . URLROOT . "score/index");
             
         }
-        else{
-            echo "error, probeer opnieuw";
-        }
+        
             $row = $this->scoreModel->getSingleScore($id);
             $data = [
                 'title' => 'Detail Uitslag',
-                'row' => $row
+                'row' => $row,
             ];
             $this->view("score/update", $data);
         
