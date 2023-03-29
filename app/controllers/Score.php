@@ -33,22 +33,30 @@ class Score extends Controller
     }
 
     public function update($id = NULL){
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            $this->scoreModel->updateScore($_POST);
-            echo "Uitslag is aangepast";
-            header("Location: " . URLROOT . "score/index");
-            
-        }
-        
+             $result = $this->scoreModel->updateScore($_POST);
+           
+            if ($result) {
+                echo "aantal punten is gewijzigd";
+                header("Refresh:3; URL=" . URLROOT . "score/index");
+            } else {
+                echo "aantal punten is gewijzigd";
+                header("Refresh:3; URL=" . URLROOT . "score/index");
+            }
+         }else {
+             
             $row = $this->scoreModel->getSingleScore($id);
-            $data = [
-                'title' => 'Detail Uitslag',
-                'row' => $row,
-            ];
+             $data = [
+                 'title' => 'Details Uitslag',
+                 'row' => $row
+             ];
+          
+
             $this->view("score/update", $data);
-        
+            
+            }   
     }
 }

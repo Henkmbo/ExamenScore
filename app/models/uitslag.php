@@ -25,7 +25,7 @@ public function getScores(){
                         inner join uitslag as UI
                         on UI.Id = PE.Id
                         inner join spel as SP
-                        on SP.Id = PE.Id;
+                        on SP.Id = PE.Id order by Aantalpunten desc;
                         ");
 
         $result = $this->db->resultSet();
@@ -47,14 +47,10 @@ public function getScores(){
     }
 
      public function updateScore($post)
-         {
-               //CALL update_person_and_uitslag
-                 $this->db->query("CALL update_person_and_uitslag(:id, :Aantalpunten)");
-                        $this->db->bind(':id', $post['id'], PDO::PARAM_INT);
-                        $this->db->bind(':Aantalpunten', $post['Aantalpunten'], PDO::PARAM_STR);
-                return $this->db->execute();
-        }
-
-     
-
+     {
+        $this->db->query("UPDATE uitslag SET Aantalpunten = :aantalpunten WHERE Id = :id");
+        $this->db->bind(':id', $post['id']);
+        $this->db->bind(':aantalpunten', $post['Aantalpunten']);
+        $this->db->execute();
+    }
 }
