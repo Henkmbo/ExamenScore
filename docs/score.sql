@@ -1,0 +1,43 @@
+DROP DATABASE IF EXISTS `score`;
+CREATE DATABASE `score`;
+USE `score`;
+
+
+DROP TABLE IF EXISTS `spel`;
+CREATE TABLE `spel`(
+	`Id`			INT 			NOT NULL 			AUTO_INCREMENT PRIMARY KEY,
+	`PersoonId`		INT				NOT NULL,
+    `ReserveringId`	INT				NOT NULL,
+	`IsActief` 		TINYINT(1) 		NOT NULL 			DEFAULT 1,
+    `Opmerking` 	TEXT			NULL,
+    `DatumAangemaakt`TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `DatumGewijzigd` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)ENGINE=INNODB;
+
+DROP TABLE IF EXISTS `uitslag`;
+CREATE TABLE `uitslag`(
+	`Id`				INT 			NOT NULL 			AUTO_INCREMENT PRIMARY KEY,
+	`SpelId`			INT,
+    `Aantalpunten`		INT				NOT NULL,
+	`IsActief` 			TINYINT(1) 		NOT NULL 			DEFAULT 1,
+    `Opmerking` 		TEXT			NULL,
+    `DatumAangemaakt`TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `DatumGewijzigd` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+     CONSTRAINT UitslagSpel FOREIGN KEY (`SpelId`) REFERENCES `Spel`(`Id`)
+)ENGINE=INNODB;
+
+DROP TABLE IF EXISTS `persoon`;
+CREATE TABLE `persoon`(
+	`Id`				INT 					NOT NULL 			AUTO_INCREMENT PRIMARY KEY,
+	`TypePersoonId`		INT,
+    `Voornaam`			VARCHAR(80)				NOT NULL,
+    `Tussenvoegsel`		VARCHAR(15)				NOT NULL,
+    `Achternaam`		VARCHAR(100)			NOT NULL,
+    `Roepnaam`			VARCHAR(80)				NOT NULL,
+	`IsVolwassen` 		TINYINT(1) 				NOT NULL 			DEFAULT 1,
+	`IsActief` 			TINYINT(1) 				NOT NULL 			DEFAULT 1,
+    `Opmerking` 		TEXT			NULL,
+    `DatumAangemaakt`TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `DatumGewijzigd` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)ENGINE=INNODB;
+
